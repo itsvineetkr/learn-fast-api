@@ -18,7 +18,7 @@ class Item(BaseModel):
 
 
 @app.get("/get-data/{data_id}")
-def get_data(data_id: str = Path(None, description="Id of the data to get.")):
+def get_data(data_id: str = Path(description="Id of the data to get.")):
     """
     In this we are taking the path parameter and processing on the basis of it.
     Path function helps to make the endpoint a little more descriptive by providing
@@ -44,18 +44,18 @@ def query_data(name: str = Query(None, description="Name of the data to get.")):
 
 
 @app.post("/add-data")
-def add_data(data_id: str, data: Item):
+def add_data(data_id: str, data_item: Item):
     """
     Using BaseModel from pydantic we define a structure of the function header.
     """
-    if data.name and data.price:
-        data[data_id] = data
+    if data_item.name and data_item.price:
+        data[data_id] = data_item
         return data
     return HTTPException(422, "Provide all function headers.")
 
 
-@app.update("/update/{data_id}")
-def update(
+@app.put("/update/{data_id}")
+def update_data(
     data_id: str,
     name: Optional[str] = None,
     price: Optional[int] = None,
