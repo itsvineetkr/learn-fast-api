@@ -13,6 +13,26 @@ class Item(BaseModel):
     price: int
     description: Optional[str] = ""
 
+# When uploading a file or something you can directly take this Model as frame of request body, instead take form input and parse it into json and then cast it into this Pydantic model
+"""
+class Details(BaseModel):
+    data : datatType
+    ...
+
+def api(file: UploadFile = File(...), details_json: str = Form(...)):
+    try:
+        details_dict = json.loads(details_json)
+        if not isinstance(details_dict, dict):
+            return "Invalid JSON format"
+        if "columns" not in details_dict or not isinstance(
+            details_dict["columns"], dict
+        ):
+            return "Invalid or missing 'columns' field"
+    except (json.JSONDecodeError, ValueError) as e:
+        return f"Invalid details JSON: {str(e)}"
+    details = Details(**json.loads(details_json))
+"""
+
 
 # Now we can create API endpoints.
 
